@@ -14,7 +14,8 @@ namespace Phonebook.API
             var config = GlobalConfiguration.Configuration;
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
-            builder.RegisterType<InMemoryContactData>().As<IContactData>().SingleInstance();
+            builder.RegisterType<SqlContactData>().As<IContactData>().InstancePerRequest();
+            builder.RegisterType<PhonebookDbContext>().InstancePerRequest();
 
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
